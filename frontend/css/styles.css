@@ -1,3 +1,7 @@
+/* ==================================================
+   Design tokens
+   ================================================== */
+
 :root {
 	/* Backgrounds */
 	--bg: #f8fafc;
@@ -18,9 +22,11 @@
 	--danger: #dc2626;
 	--warning: #d97706;
 
+	/* Radius */
 	--radius-sm: 6px;
 	--radius-md: 10px;
 
+	/* Spacing */
 	--space-1: 4px;
 	--space-2: 8px;
 	--space-3: 12px;
@@ -28,6 +34,10 @@
 	--space-5: 24px;
 	--space-6: 32px;
 }
+
+/* ==================================================
+   Base / reset
+   ================================================== */
 
 * {
 	box-sizing: border-box;
@@ -45,28 +55,9 @@ body {
 	line-height: 1.6;
 }
 
-/* ── Header ───────────────────────────────────── */
-
-.site-header {
-	padding: var(--space-6);
-	border-bottom: 1px solid var(--border);
-	background: var(--surface);
-}
-
-.brand h1 {
-	margin: 0;
-	font-size: 28px;
-	font-weight: 600;
-	letter-spacing: -0.02em;
-	color: var(--brand);
-}
-
-.brand p {
-	margin: var(--space-1) 0 0;
-	color: var(--muted);
-}
-
-/* ── Layout ───────────────────────────────────── */
+/* ==================================================
+   Layout
+   ================================================== */
 
 .layout {
 	max-width: 1120px;
@@ -83,7 +74,48 @@ body {
 	}
 }
 
-/* ── Panels ───────────────────────────────────── */
+/* ==================================================
+   Header
+   ================================================== */
+
+.site-header {
+	background: var(--surface);
+	border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: var(--space-5) var(--space-4);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-4);
+}
+
+.brand h1 {
+	margin: 0;
+	font-size: 26px;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	color: var(--brand);
+}
+
+.brand p {
+	margin: var(--space-1) 0 0;
+	font-size: 13px;
+	color: var(--muted);
+}
+
+.header-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+/* ==================================================
+   Panels
+   ================================================== */
 
 .panel {
 	background: var(--surface);
@@ -99,7 +131,9 @@ body {
 	border-left: 4px solid var(--brand);
 }
 
-/* ── Headings ─────────────────────────────────── */
+/* ==================================================
+   Typography
+   ================================================== */
 
 h2 {
 	font-size: 20px;
@@ -113,11 +147,25 @@ h3 {
 	margin: var(--space-4) 0 var(--space-2);
 }
 
-/* ── Forms ────────────────────────────────────── */
+.section-title {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+/* ==================================================
+   Forms
+   ================================================== */
 
 label {
 	font-size: 12px;
 	color: var(--muted);
+	display: flex;
+	align-items: center;
+}
+
+label:hover {
+	color: var(--brand);
 }
 
 input,
@@ -137,7 +185,9 @@ select:focus {
 	box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.1);
 }
 
-/* ── Buttons ──────────────────────────────────── */
+/* ==================================================
+   Buttons
+   ================================================== */
 
 button {
 	border: none;
@@ -148,6 +198,8 @@ button {
 	cursor: pointer;
 	background: var(--brand);
 	color: #ffffff;
+	display: inline-flex;
+	align-items: center;
 	transition:
 		background 0.15s ease,
 		transform 0.05s ease;
@@ -162,7 +214,9 @@ button.danger {
 	background: var(--danger);
 }
 
-/* ── Results ──────────────────────────────────── */
+/* ==================================================
+   Results
+   ================================================== */
 
 .total {
 	font-size: 32px;
@@ -172,7 +226,9 @@ button.danger {
 	color: var(--brand);
 }
 
-/* ── Sub-panels ───────────────────────────────── */
+/* ==================================================
+   Sub‑panels
+   ================================================== */
 
 .sub-panel {
 	display: none;
@@ -182,7 +238,9 @@ button.danger {
 	border-left: 3px solid var(--border);
 }
 
-/* ── Comparison Grid ──────────────────────────── */
+/* ==================================================
+   Comparison grid
+   ================================================== */
 
 .compare-grid {
 	display: grid;
@@ -224,63 +282,16 @@ button.danger {
 	color: var(--text);
 }
 
-/* ── Toast ───────────────────────────────────── */
-
-#toastContainer {
-	position: fixed;
-	top: var(--space-4);
-	right: var(--space-4);
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-2);
-	z-index: 1000;
-}
-
-html[data-theme="dark"] {
-	/* Backgrounds */
-	--bg: #0b1020;
-	--surface: #141a33;
-	--surface-muted: #1b2142;
-	--border: #2a3160;
-
-	/* Text */
-	--text: #f5f7ff;
-	--muted: #a4abc9;
-
-	/* Brand stays consistent */
-	--brand: #5eead4;
-	--brand-soft: #2dd4bf;
-
-	/* Semantic */
-	--success: #4ade80;
-	--danger: #f87171;
-	--warning: #facc15;
-}
-
-/* ── Theme toggle ───────────────────────────────── */
-
-.theme-toggle {
-	margin-top: var(--space-3);
-	align-self: flex-start;
-	background: var(--surface-muted);
-	color: var(--text);
-	border: 1px solid var(--border);
-	font-size: 12px;
-	padding: 6px 10px;
-}
-
-.theme-toggle:hover {
-	background: var(--surface);
-}
-
-/* ── Icon system (currentColor driven) ───────────── */
+/* ==================================================
+   Icons
+   ================================================== */
 
 .icon {
 	width: 16px;
 	height: 16px;
+	color: currentColor;
 	display: inline-block;
 	vertical-align: middle;
-	color: currentColor;
 	filter: saturate(0.9);
 }
 
@@ -293,9 +304,9 @@ html[data-theme="dark"] {
 }
 
 .icon.section {
-	margin-right: 8px;
 	width: 18px;
 	height: 18px;
+	margin-right: 8px;
 	opacity: 0.9;
 }
 
@@ -306,84 +317,43 @@ html[data-theme="dark"] {
 	transition: transform 0.3s ease;
 }
 
-/* ── Section titles ─────────────────────────────── */
-
-.section-title {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-}
-
-/* ── Dark‑mode icon animation ───────────────────── */
-
-html[data-theme="dark"] .icon.toggle {
-	transform: rotate(180deg);
-}
-
-/* ── Hover polish ───────────────────────────────── */
-
-label:hover {
-	color: var(--brand);
-}
-
 button:hover .icon {
 	filter: brightness(1.1);
 }
 
-/* ── Mobile icon‑first tweaks ───────────────────── */
+/* ==================================================
+   Theme toggle
+   ================================================== */
 
-@media (max-width: 600px) {
-	label {
-		font-size: 11px;
-	}
-
-	.section-title {
-		font-size: 18px;
-	}
-
-	.icon.label {
-		margin-right: 4px;
-	}
+.theme-toggle {
+	background: var(--surface-muted);
+	color: var(--text);
+	border: 1px solid var(--border);
+	font-size: 12px;
+	padding: 6px 10px;
 }
 
-/* ── Header (refined) ───────────────────────────── */
-
-.site-header {
+.theme-toggle:hover {
 	background: var(--surface);
-	border-bottom: 1px solid var(--border);
 }
 
-.header-inner {
-	max-width: 1120px;
-	margin: 0 auto;
-	padding: var(--space-5) var(--space-4);
+/* ==================================================
+   Toasts
+   ================================================== */
+
+#toastContainer {
+	position: fixed;
+	top: var(--space-4);
+	right: var(--space-4);
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--space-4);
+	flex-direction: column;
+	gap: var(--space-2);
+	z-index: 1000;
 }
 
-.brand h1 {
-	margin: 0;
-	font-size: 26px;
-	font-weight: 600;
-	letter-spacing: -0.02em;
-	color: var(--brand);
-}
-
-.brand p {
-	margin: var(--space-1) 0 0;
-	font-size: 13px;
-	color: var(--muted);
-}
-
-.header-actions {
-	display: flex;
-	align-items: center;
-	gap: var(--space-3);
-}
-
-/* ── Footer ────────────────────────────────────── */
+/* ==================================================
+   Footer
+   ================================================== */
 
 .site-footer {
 	margin-top: var(--space-6);
@@ -411,9 +381,52 @@ button:hover .icon {
 	opacity: 0.8;
 }
 
-/* ── Footer responsiveness ─────────────────────── */
+.footer-meta a {
+	color: var(--brand);
+}
+
+/* ==================================================
+   Dark theme
+   ================================================== */
+
+html[data-theme="dark"] {
+	--bg: #0b1020;
+	--surface: #141a33;
+	--surface-muted: #1b2142;
+	--border: #2a3160;
+
+	--text: #f5f7ff;
+	--muted: #a4abc9;
+
+	--brand: #5eead4;
+	--brand-soft: #2dd4bf;
+
+	--success: #4ade80;
+	--danger: #f87171;
+	--warning: #facc15;
+}
+
+html[data-theme="dark"] .icon.toggle {
+	transform: rotate(180deg);
+}
+
+/* ==================================================
+   Responsive tweaks
+   ================================================== */
 
 @media (max-width: 600px) {
+	label {
+		font-size: 11px;
+	}
+
+	.section-title {
+		font-size: 18px;
+	}
+
+	.icon.label {
+		margin-right: 4px;
+	}
+
 	.header-inner {
 		flex-direction: column;
 		align-items: flex-start;
