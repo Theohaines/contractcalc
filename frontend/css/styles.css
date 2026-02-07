@@ -1,0 +1,169 @@
+:root {
+	--bg: #0f1220;
+	--surface: #1a1f36;
+	--border: #2b3052;
+
+	--text: #ffffff;
+	--muted: #9aa4bf;
+
+	--primary: #4cc9f0;
+	--danger: #ef476f;
+
+	--radius: 8px;
+	--space: 16px;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--text);
+}
+
+.site-header {
+	padding: 32px;
+	border-bottom: 1px solid var(--border);
+}
+
+.brand h1 {
+	margin: 0;
+	font-size: 1.8rem;
+}
+
+.brand p {
+	margin: 4px 0 0;
+	color: var(--muted);
+}
+
+.layout {
+	max-width: 1100px;
+	margin: 32px auto;
+	padding: 0 16px;
+	display: grid;
+	grid-template-columns: 1.4fr 1fr;
+	gap: 24px;
+}
+
+.panel {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+h2,
+h3 {
+	margin: 0 0 8px;
+}
+
+label {
+	font-size: 0.85rem;
+	color: var(--muted);
+}
+
+input,
+select,
+button {
+	padding: 10px;
+	border-radius: var(--radius);
+	border: 1px solid var(--border);
+	background: var(--bg);
+	color: var(--text);
+}
+
+button {
+	cursor: pointer;
+	background: var(--primary);
+	color: #000;
+	font-weight: 600;
+	border: none;
+}
+
+button.danger {
+	background: var(--danger);
+	color: #fff;
+}
+
+button:hover {
+	opacity: 0.9;
+}
+
+.sub-panel {
+	display: none;
+	gap: 8px;
+}
+
+.total {
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid var(--border);
+	margin: 16px 0;
+}
+
+.button-row {
+	display: flex;
+	gap: 8px;
+}
+
+.comparison-results {
+	margin-top: 8px;
+	font-size: 0.9rem;
+}
+
+.compare-grid {
+	display: grid;
+	grid-template-columns: 1.2fr 1fr 1fr;
+	border-top: 1px solid var(--border);
+	margin-top: 12px;
+	font-size: 0.85rem;
+}
+
+.compare-header {
+	padding: 8px;
+	font-weight: 600;
+	color: var(--primary);
+	border-bottom: 1px solid var(--border);
+}
+
+.metric {
+	padding: 8px;
+	color: var(--muted);
+	border-bottom: 1px solid var(--border);
+}
+
+.value {
+	padding: 8px;
+	text-align: center;
+	border-bottom: 1px solid var(--border);
+}
+
+.value.good {
+	color: #4ade80;
+	font-weight: 600;
+}
+
+.value.bad {
+	color: #f87171;
+	font-weight: 600;
+}
+
+.value.neutral {
+	color: var(--text);
+}
+
+@media (max-width: 900px) {
+	.layout {
+		grid-template-columns: 1fr;
+	}
+}
