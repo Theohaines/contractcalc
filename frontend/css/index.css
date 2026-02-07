@@ -1,1 +1,26 @@
-/* reserved for future page-specific tweaks */
+.not-found {
+	text-align: center;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.not-found h2 {
+	font-size: 24px;
+}
+
+.not-found p {
+	margin: var(--space-2) 0;
+	color: var(--muted);
+}
+
+.back-link {
+	margin-top: var(--space-4);
+	display: inline-block;
+	font-weight: 600;
+	color: var(--brand);
+	text-decoration: none;
+}
+
+.back-link:hover {
+	text-decoration: underline;
+}
