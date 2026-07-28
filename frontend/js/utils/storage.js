@@ -1,123 +1,172 @@
 import { calculateMetrics } from "./calculator.js";
-import { showToast } from "./ui.js";
+import { getElement, showToast } from "./ui.js";
 
 const SAVED_KEY = "costify:saved";
 const DRAFT_KEY = "costify:draft";
 
+const fieldIds = [
+	"contractMonthlyCost",
+	"contractUpfrontCost",
+	"contractIncrease",
+	"contractDuration",
+	"tradeinSelected",
+	"tradeinAmount",
+	"cashbackType",
+	"cashbackAmount",
+];
+
+function getFieldValues() {
+	return Object.fromEntries(fieldIds.map((id) => [id, getElement(id).value]));
+}
+
+function setFieldValues(values) {
+	Object.entries(values).forEach(([key, value]) => {
+		const element = document.getElementById(key);
+
+		if (element) {
+			element.value = value;
+		}
+	});
+
+	getElement("tradeinSelected").dispatchEvent(new Event("change"));
+	getElement("cashbackType").dispatchEvent(new Event("change"));
+}
+
 export function getSaved() {
-	return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+	try {
+		return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+	} catch {
+		return [];
+	}
 }
 
 export function saveDraft() {
-	const draft = {
-		contractMonthlyCost: contractMonthlyCost.value,
-		contractUpfrontCost: contractUpfrontCost.value,
-		contractIncrease: contractIncrease.value,
-		contractDuration: contractDuration.value,
-		tradeinSelected: tradeinSelected.value,
-		tradeinAmount: tradeinAmount.value,
-		cashbackType: cashbackType.value,
-		cashbackAmount: cashbackAmount.value,
-	};
-	localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+	localStorage.setItem(DRAFT_KEY, JSON.stringify(getFieldValues()));
 }
 
 export function loadDraft() {
-	const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
-	if (!draft) return;
+	try {
+		const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
 
-	Object.entries(draft).forEach(([key, val]) => {
-		if (window[key]) window[key].value = val;
-	});
+		if (draft) {
+			setFieldValues(draft);
+		}
+	} catch {
+		localStorage.removeItem(DRAFT_KEY);
+	}
 }
 
 export function saveCalculation() {
-	if (!calculationName.value.trim()) {
+	const calculationName = getElement("calculationName");
+	const name = calculationName.value.trim();
+
+	if (!name) {
 		showToast("Enter a name to save", "error");
+		calculationName.focus();
 		return;
 	}
 
+	const values = getFieldValues();
 	const metrics = calculateMetrics({
-		monthly: +contractMonthlyCost.value,
-		upfront: +contractUpfrontCost.value,
-		duration: +contractDuration.value,
-		increase: +contractIncrease.value,
-		tradein: tradeinSelected.value === "tradein" ? +tradeinAmount.value : 0,
-		cashback: cashbackType.value === "bacs" ? +cashbackAmount.value : 0,
+		monthly: Number(values.contractMonthlyCost) || 0,
+		upfront: Number(values.contractUpfrontCost) || 0,
+		duration: Number(values.contractDuration) || 0,
+		increase: Number(values.contractIncrease) || 0,
+		tradein:
+			values.tradeinSelected === "tradein"
+				? Number(values.tradeinAmount) || 0
+				: 0,
+		cashback:
+			values.cashbackType === "bacs"
+				? Number(values.cashbackAmount) || 0
+				: 0,
 	});
 
-	const saved = getSaved().filter((c) => c.name !== calculationName.value);
+	const saved = getSaved().filter((calculation) => {
+		return calculation.name !== name;
+	});
 
 	saved.push({
-		name: calculationName.value,
-		contractMonthlyCost: contractMonthlyCost.value,
-		contractUpfrontCost: contractUpfrontCost.value,
-		contractIncrease: contractIncrease.value,
-		contractDuration: contractDuration.value,
-		tradeinSelected: tradeinSelected.value,
-		tradeinAmount: tradeinAmount.value,
-		cashbackType: cashbackType.value,
-		cashbackAmount: cashbackAmount.value,
+		name,
+		...values,
 		totalFinalCost: metrics.totalFinalCost,
 	});
 
 	localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
-	showToast("Calculation saved");
+	showToast("Calculation saved", "success");
 	populateSavedDropdowns();
 }
 
 export function deleteCalculation() {
-	const name = calculationName.value;
-	if (!name) return;
+	const calculationName = getElement("calculationName");
+	const name = calculationName.value.trim();
 
-	const saved = getSaved().filter((c) => c.name !== name);
-	localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
-	showToast("Calculation deleted");
+	if (!name) {
+		showToast("Choose or enter a calculation name first", "error");
+		calculationName.focus();
+		return;
+	}
+
+	const saved = getSaved();
+	const updated = saved.filter((calculation) => calculation.name !== name);
+
+	if (updated.length === saved.length) {
+		showToast("No saved calculation found with that name", "error");
+		return;
+	}
+
+	localStorage.setItem(SAVED_KEY, JSON.stringify(updated));
+	showToast("Calculation deleted", "success");
 	populateSavedDropdowns();
 }
 
 export function populateSavedDropdowns() {
 	const saved = getSaved();
+	const savedCalculationsSelect = getElement("savedCalculationsSelect");
+	const compareSelect1 = getElement("compareSelect1");
+	const compareSelect2 = getElement("compareSelect2");
 
-	savedCalculationsSelect.innerHTML = '<option value="">Load saved…</option>';
-	compareSelect1.innerHTML = '<option value="">Compare…</option>';
-	compareSelect2.innerHTML = '<option value="">Compare…</option>';
+	savedCalculationsSelect.innerHTML =
+		'<option value="">Load saved...</option>';
+	compareSelect1.innerHTML = '<option value="">Compare...</option>';
+	compareSelect2.innerHTML = '<option value="">Compare...</option>';
 
-	saved.forEach((calc) => {
-		const opt = new Option(
-			`${calc.name} – £${calc.totalFinalCost.toFixed(2)}`,
-			calc.name,
-		);
-		savedCalculationsSelect.add(opt.cloneNode(true));
-		compareSelect1.add(opt.cloneNode(true));
-		compareSelect2.add(opt.cloneNode(true));
+	saved.forEach((calculation) => {
+		const label = `${calculation.name} - £${Number(
+			calculation.totalFinalCost,
+		).toFixed(2)}`;
+
+		savedCalculationsSelect.add(new Option(label, calculation.name));
+		compareSelect1.add(new Option(label, calculation.name));
+		compareSelect2.add(new Option(label, calculation.name));
 	});
 }
 
 export function loadCalculation(name) {
-	const saved = getSaved().find((c) => c.name === name);
-	if (!saved) return;
+	const saved = getSaved().find((calculation) => calculation.name === name);
 
-	Object.entries(saved).forEach(([key, val]) => {
-		if (window[key]) window[key].value = val;
-	});
+	if (!saved) {
+		return;
+	}
 
-	showToast(`Loaded "${name}"`);
+	setFieldValues(saved);
+	getElement("calculationName").value = saved.name;
+	showToast(`Loaded "${name}"`, "info");
 }
 
 export function initStorage() {
 	loadDraft();
 	populateSavedDropdowns();
 
-	document
-		.getElementById("saveBtn")
-		.addEventListener("click", saveCalculation);
+	getElement("saveBtn").addEventListener("click", saveCalculation);
+	getElement("deleteBtn").addEventListener("click", deleteCalculation);
 
-	document
-		.getElementById("deleteBtn")
-		.addEventListener("click", deleteCalculation);
-
-	savedCalculationsSelect.addEventListener("change", (e) => {
-		if (e.target.value) loadCalculation(e.target.value);
-	});
+	getElement("savedCalculationsSelect").addEventListener(
+		"change",
+		(event) => {
+			if (event.target.value) {
+				loadCalculation(event.target.value);
+			}
+		},
+	);
 }

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>Changelog - Costify</title>
+
+		<meta
+			name="description"
+			content="See the latest updates, improvements, and fixes to Costify."
+		/>
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href="https://costify.info/changelog" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Changelog - Costify" />
+		<meta
+			property="og:description"
+			content="See the latest updates, improvements, and fixes to Costify."
+		/>
+		<meta property="og:url" content="https://costify.info/changelog" />
+		<meta property="og:site_name" content="Costify" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="Changelog - Costify" />
+		<meta
+			name="twitter:description"
+			content="See the latest updates, improvements, and fixes to Costify."
+		/>
+
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="stylesheet" href="/css/styles.css" />
+		<link rel="stylesheet" href="/css/changelog.css" />
+	</head>
+
+	<body>
+		<header class="navbar">
+			<div class="nav-container">
+				<a href="/" class="nav-logo" aria-label="Costify home">
+					<img
+						src="/favicon.svg"
+						alt=""
+						class="nav-logo-icon"
+						aria-hidden="true"
+					/>
+					<span>Costify</span>
+				</a>
+
+				<nav class="navbar-menu" aria-label="Primary">
+					<a href="/" class="nav-link">Calculator</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="page-shell">
+			<section class="hero" aria-labelledby="changelog-title">
+				<p class="eyebrow">Project updates</p>
+				<h1 id="changelog-title">Changelog</h1>
+				<p class="hero-text">
+					Track the latest features, fixes, and improvements to
+					Costify.
+				</p>
+			</section>
+
+			<section class="changelog-card card" aria-label="Changelog entries">
+				<div class="changelog-toolbar">
+					<div>
+						<h2>Latest updates</h2>
+						<p id="changelogSummary">Loading updates...</p>
+					</div>
+
+					<div class="changelog-actions">
+						<button
+							id="expandAllBtn"
+							type="button"
+							class="btn-secondary"
+						>
+							Expand all
+						</button>
+						<button
+							id="collapseAllBtn"
+							type="button"
+							class="btn-secondary"
+						>
+							Collapse all
+						</button>
+					</div>
+				</div>
+
+				<div
+					id="changelogList"
+					class="changelog-list"
+					aria-live="polite"
+				></div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<div class="footer-bottom">
+				<p class="footer-copyright">
+					&copy; 2026 Costify. All rights reserved. Made with love by
+					<a href="https://theohaines.company">
+						The Theo Haines Company</a
+					>.
+				</p>
+			</div>
+		</footer>
+
+		<div
+			id="toastContainer"
+			class="toast-container"
+			aria-live="polite"
+			aria-atomic="true"
+		></div>
+
+		<script type="module" src="/js/changelog.js"></script>
+	</body>
+</html>

@@ -11,4 +11,8 @@ router.get("/", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "../../frontend/pages/index.html"));
 });
 
+router.get("/changelog", (req, res) => {
+	res.sendFile(path.join(__dirname, "../../frontend/pages/changelog.html"));
+});
+
 export default router;
