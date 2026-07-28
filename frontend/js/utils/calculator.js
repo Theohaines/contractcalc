@@ -1,5 +1,5 @@
-import { showToast } from "./ui.js";
 import { saveDraft } from "./storage.js";
+import { getElement, showToast } from "./ui.js";
 
 export function calculateMetrics({
 	monthly,
@@ -10,44 +10,54 @@ export function calculateMetrics({
 	cashback,
 }) {
 	let totalMonthly = 0;
-	let current = monthly;
+	let currentMonthly = Math.max(monthly, 0);
+	const safeDuration = Math.max(Math.floor(duration), 0);
 
-	for (let m = 1; m <= duration; m++) {
-		totalMonthly += current;
-		if (m % 12 === 0 && m !== duration) {
-			current += increase;
+	for (let month = 1; month <= safeDuration; month += 1) {
+		totalMonthly += currentMonthly;
+
+		if (month % 12 === 0 && month !== safeDuration) {
+			currentMonthly += Math.max(increase, 0);
 		}
 	}
 
-	let total =
-		totalMonthly + upfront - Math.max(tradein, 0) - Math.max(cashback, 0);
+	const totalFinalCost =
+		totalMonthly +
+		Math.max(upfront, 0) -
+		Math.max(tradein, 0) -
+		Math.max(cashback, 0);
 
 	return {
-		totalFinalCost: total,
-		effectiveMonthly: duration > 0 ? total / duration : 0,
+		totalFinalCost,
+		effectiveMonthly: safeDuration > 0 ? totalFinalCost / safeDuration : 0,
 	};
 }
 
 export function initCalculator() {
-	const calculateBtn = document.getElementById("calculateBtn");
-	const youPayText = document.getElementById("youPayText");
+	const calculatorForm = getElement("calculatorForm");
+	const youPayText = getElement("youPayText");
 
-	calculateBtn.addEventListener("click", () => {
+	calculatorForm.addEventListener("submit", (event) => {
+		event.preventDefault();
+
 		const metrics = calculateMetrics({
-			monthly: +contractMonthlyCost.value || 0,
-			upfront: +contractUpfrontCost.value || 0,
-			duration: +contractDuration.value || 0,
-			increase: +contractIncrease.value || 0,
+			monthly: Number(getElement("contractMonthlyCost").value) || 0,
+			upfront: Number(getElement("contractUpfrontCost").value) || 0,
+			duration: Number(getElement("contractDuration").value) || 0,
+			increase: Number(getElement("contractIncrease").value) || 0,
 			tradein:
-				tradeinSelected.value === "tradein" ? +tradeinAmount.value : 0,
-			cashback: cashbackType.value === "bacs" ? +cashbackAmount.value : 0,
+				getElement("tradeinSelected").value === "tradein"
+					? Number(getElement("tradeinAmount").value) || 0
+					: 0,
+			cashback:
+				getElement("cashbackType").value === "bacs"
+					? Number(getElement("cashbackAmount").value) || 0
+					: 0,
 		});
 
-		youPayText.textContent = `You pay: £${metrics.totalFinalCost.toFixed(
-			2,
-		)}`;
+		youPayText.textContent = `£${metrics.totalFinalCost.toFixed(2)}`;
 
 		saveDraft();
-		showToast("Calculation updated");
+		showToast("Calculation updated", "success");
 	});
 }

@@ -1,9 +1,10 @@
 import { getSaved } from "./storage.js";
+import { getElement } from "./ui.js";
 
 export function initComparison() {
-	const select1 = document.getElementById("compareSelect1");
-	const select2 = document.getElementById("compareSelect2");
-	const output = document.getElementById("comparisonResults");
+	const select1 = getElement("compareSelect1");
+	const select2 = getElement("compareSelect2");
+	const output = getElement("comparisonResults");
 
 	function compare() {
 		const name1 = select1.value;
@@ -15,8 +16,8 @@ export function initComparison() {
 		}
 
 		const saved = getSaved();
-		const a = saved.find((c) => c.name === name1);
-		const b = saved.find((c) => c.name === name2);
+		const a = saved.find((calculation) => calculation.name === name1);
+		const b = saved.find((calculation) => calculation.name === name2);
 
 		if (!a || !b) {
 			output.innerHTML = "";
@@ -31,84 +32,99 @@ export function initComparison() {
 }
 
 function renderGrid(a, b) {
-	const container = document.getElementById("comparisonResults");
+	const container = getElement("comparisonResults");
+	const grid = document.createElement("div");
 
-	const metrics = [
+	grid.className = "compare-grid";
+	grid.append(
+		createCell("div", "compare-header", ""),
+		createCell("div", "compare-header", a.name),
+		createCell("div", "compare-header", b.name),
+	);
+
+	getMetrics().forEach((metric) => {
+		const valueA = Number(a[metric.key]) || 0;
+		const valueB = Number(b[metric.key]) || 0;
+		const [classA, classB] = getComparisonClasses(
+			valueA,
+			valueB,
+			metric.lowerIsBetter,
+		);
+
+		grid.append(
+			createCell("div", "metric", metric.label),
+			createCell("div", `value ${classA}`, metric.format(valueA)),
+			createCell("div", `value ${classB}`, metric.format(valueB)),
+		);
+	});
+
+	container.replaceChildren(grid);
+}
+
+function createCell(tagName, className, text) {
+	const element = document.createElement(tagName);
+
+	element.className = className;
+	element.textContent = text;
+
+	return element;
+}
+
+function getComparisonClasses(valueA, valueB, lowerIsBetter) {
+	if (valueA === valueB) {
+		return ["neutral", "neutral"];
+	}
+
+	if (lowerIsBetter) {
+		return valueA < valueB ? ["good", "bad"] : ["bad", "good"];
+	}
+
+	return valueA > valueB ? ["good", "bad"] : ["bad", "good"];
+}
+
+function getMetrics() {
+	return [
 		{
 			label: "Total final cost",
 			key: "totalFinalCost",
-			format: (v) => `£${v.toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: true,
 		},
 		{
-			label: "Monthly cost (initial)",
+			label: "Monthly cost",
 			key: "contractMonthlyCost",
-			format: (v) => `£${Number(v).toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: true,
 		},
 		{
 			label: "Upfront cost",
 			key: "contractUpfrontCost",
-			format: (v) => `£${Number(v).toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: true,
 		},
 		{
 			label: "Contract length",
 			key: "contractDuration",
-			format: (v) => `${v} months`,
+			format: (value) => `${value} months`,
 			lowerIsBetter: false,
 		},
 		{
 			label: "Annual increase",
 			key: "contractIncrease",
-			format: (v) => `£${Number(v).toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: true,
 		},
 		{
-			label: "Trade‑in value",
+			label: "Trade-in value",
 			key: "tradeinAmount",
-			format: (v) => `£${Number(v).toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: false,
 		},
 		{
 			label: "Cashback",
 			key: "cashbackAmount",
-			format: (v) => `£${Number(v).toFixed(2)}`,
+			format: (value) => `£${value.toFixed(2)}`,
 			lowerIsBetter: false,
 		},
 	];
-
-	let html = `
-		<div class="compare-grid">
-			<div class="compare-header"></div>
-			<div class="compare-header">${a.name}</div>
-			<div class="compare-header">${b.name}</div>
-	`;
-
-	metrics.forEach((m) => {
-		const valA = Number(a[m.key]) || 0;
-		const valB = Number(b[m.key]) || 0;
-
-		let classA = "neutral";
-		let classB = "neutral";
-
-		if (valA !== valB) {
-			if (m.lowerIsBetter) {
-				classA = valA < valB ? "good" : "bad";
-				classB = valB < valA ? "good" : "bad";
-			} else {
-				classA = valA > valB ? "good" : "bad";
-				classB = valB > valA ? "good" : "bad";
-			}
-		}
-
-		html += `
-			<div class="metric">${m.label}</div>
-			<div class="value ${classA}">${m.format(valA)}</div>
-			<div class="value ${classB}">${m.format(valB)}</div>
-		`;
-	});
-
-	html += `</div>`;
-	container.innerHTML = html;
 }

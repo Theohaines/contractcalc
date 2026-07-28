@@ -4,74 +4,79 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>Page not found – Costify</title>
+		<title>Page not found - Costify</title>
 
 		<meta
 			name="description"
-			content="The page you were looking for could not be found. Return to Costify’s UK contract cost calculator."
+			content="The page you were looking for could not be found. Return to Costify's UK contract cost calculator."
 		/>
-
 		<meta name="robots" content="noindex, follow" />
-
 		<link rel="canonical" href="https://costify.info/404" />
 
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="stylesheet" href="/css/styles.css" />
 		<link rel="stylesheet" href="/css/index.css" />
-
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-		/>
 	</head>
 
 	<body>
-		<header class="site-header">
-			<div class="header-inner">
-				<div class="brand">
-					<h1>Costify</h1>
-					<p>UK contract cost calculator</p>
-				</div>
+		<header class="navbar">
+			<div class="nav-container">
+				<a href="/" class="nav-logo" aria-label="Costify home">
+					<img
+						src="/favicon.svg"
+						alt=""
+						class="nav-logo-icon"
+						aria-hidden="true"
+					/>
+					<span>Costify</span>
+				</a>
 
-				<nav class="header-actions">
-					<button
-						id="themeToggle"
-						class="theme-toggle"
-						aria-label="Toggle dark mode"
-					>
-						<img
-							id="themeIcon"
-							src="/media/icons/darkmode.svg"
-							class="icon toggle"
-							alt=""
-							aria-hidden="true"
-						/>
-						<span id="themeLabel">Dark mode</span>
-					</button>
+				<nav class="navbar-menu" aria-label="Primary navigation">
+					<a href="/" class="nav-link">Calculator</a>
 				</nav>
 			</div>
 		</header>
 
-		<main class="layout">
-			<section class="panel not-found">
-				<h2>404 – Page not found</h2>
-				<p>The page you’re looking for doesn’t exist or has moved.</p>
-				<a href="/" class="back-link">Return to Costify</a>
-			</section>
+		<main class="error-page">
+			<h1>404</h1>
+			<p>Page not found</p>
+			<a href="/" class="btn-primary">Go home</a>
 		</main>
 
-		<footer class="site-footer">
-			<div class="footer-inner">
-				<p>© 2026 <strong>Costify</strong>.</p>
-				<p class="footer-meta">
-					Built with love by
-					<a href="https://theohaines.company"
-						>The Theo Haines Company</a
+		<footer class="footer">
+			<div class="footer-container">
+				<div class="footer-section">
+					<h3>Product</h3>
+					<ul>
+						<li><a href="/">Calculator</a></li>
+					</ul>
+				</div>
+
+				<div class="footer-section">
+					<h3>Company</h3>
+					<ul>
+						<li>
+							<a href="https://theohaines.company">
+								The Theo Haines Company
+							</a>
+						</li>
+						<li><a href="/">Costify home</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="footer-bottom">
+				<p class="footer-copyright">
+					&copy; 2026 Costify. All rights reserved. Made with love by
+					<a href="https://theohaines.company">
+						The Theo Haines Company</a
 					>.
 				</p>
+
+				<div class="footer-links">
+					<a href="/">Home</a>
+				</div>
 			</div>
 		</footer>
-
-		<script type="module" src="/js/index.js"></script>
 	</body>
 </html>
