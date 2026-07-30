@@ -381,6 +381,70 @@
 					</section>
 				</section>
 			</section>
+
+			<section
+				class="bookmarklet-section"
+				aria-labelledby="bookmarklet-title"
+			>
+				<h2 id="bookmarklet-title">Bookmarklet</h2>
+				<p id="bookmarklet-instructions">
+					Drag this button to your bookmarks bar to instantly
+					calculate contract costs on the carphonewarehouse.com
+					website.
+				</p>
+
+				<div class="bookmarklet-buttons">
+					<a
+						id="bookmarkletLink"
+						class="bookmarklet-btn bookmarklet-drag"
+						draggable="true"
+					>
+						Costify Quick Calculate
+					</a>
+					<button
+						id="bookmarkletCopy"
+						type="button"
+						class="btn-secondary bookmarklet-copy"
+					>
+						Copy for Mobile
+					</button>
+				</div>
+
+				<div id="bookmarkletModal" class="bookmarklet-modal" hidden>
+					<div class="bookmarklet-modal-content">
+						<button
+							type="button"
+							id="bookmarkletModalClose"
+							class="modal-close"
+							aria-label="Close"
+						>
+							
+						</button>
+						<h3>Add to Mobile Browser</h3>
+						<ol class="bookmarklet-steps">
+							<li>Copy the code above</li>
+							<li>Open your browser's bookmark menu</li>
+							<li>Create a new bookmark</li>
+							<li>Paste the code in the URL field</li>
+							<li>Name it "Costify Quick Calculate"</li>
+							<li>Save and use on the carphonewarehouse.com site</li>
+						</ol>
+						<textarea
+							id="bookmarkletCode"
+							class="bookmarklet-code"
+							readonly
+							aria-label="Bookmarklet code"
+						></textarea>
+						<button
+							id="bookmarkletCodeCopy"
+							type="button"
+							class="btn-primary"
+						>
+							Copy Code
+						</button>
+					</div>
+				</div>
+			</section>
 		</main>
 
 		<footer class="footer">
