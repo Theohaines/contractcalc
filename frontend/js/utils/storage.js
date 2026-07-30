@@ -9,6 +9,7 @@ const fieldIds = [
 	"contractUpfrontCost",
 	"contractIncrease",
 	"contractDuration",
+	"contractStartDate",
 	"tradeinSelected",
 	"tradeinAmount",
 	"cashbackType",
@@ -80,6 +81,7 @@ export function saveCalculation() {
 			values.cashbackType === "bacs"
 				? Number(values.cashbackAmount) || 0
 				: 0,
+		startDate: values.contractStartDate || null,
 	});
 
 	const saved = getSaved().filter((calculation) => {

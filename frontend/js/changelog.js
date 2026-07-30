@@ -1,5 +1,17 @@
 const releases = [
 	{
+		version: "1.1.0",
+		date: "2026-07-30",
+		type: "Patch",
+		excerpt: "QOL Release.",
+		tags: ["QoL"],
+		items: [
+			"Updated default monthly increase to £1.80 (ID Mobile).",
+			"Updated calculator to take into account contract start date for better accuracy.",
+			"Added bookmarklet to allow for quick calculation on the carphone warehouse website (support for more sites coming soon)."
+		],
+	},
+	{
 		version: "1.0.0",
 		date: "2026-07-28",
 		type: "Launch",
@@ -9,7 +21,7 @@ const releases = [
 			"Launched the UK contract cost calculator.",
 			"Added save and load support for calculations.",
 			"Included compare tools for saved calculations.",
-			"Added change log for tracking."
+			"Added change log for tracking.",
 		],
 	},
 ];

@@ -8,16 +8,25 @@ export function calculateMetrics({
 	increase,
 	tradein,
 	cashback,
+	startDate,
 }) {
 	let totalMonthly = 0;
 	let currentMonthly = Math.max(monthly, 0);
 	const safeDuration = Math.max(Math.floor(duration), 0);
+	const safeIncrease = Math.max(increase, 0);
+
+	const start = startDate ? new Date(startDate) : new Date();
+	const startMonth = start.getMonth();
+	const startYear = start.getFullYear();
 
 	for (let month = 1; month <= safeDuration; month += 1) {
 		totalMonthly += currentMonthly;
 
-		if (month % 12 === 0 && month !== safeDuration) {
-			currentMonthly += Math.max(increase, 0);
+		const currentDate = new Date(startYear, startMonth + month, 1);
+		const currentDateMonth = currentDate.getMonth();
+
+		if (currentDateMonth === 3 && month < safeDuration) {
+			currentMonthly += safeIncrease;
 		}
 	}
 
@@ -53,6 +62,7 @@ export function initCalculator() {
 				getElement("cashbackType").value === "bacs"
 					? Number(getElement("cashbackAmount").value) || 0
 					: 0,
+			startDate: getElement("contractStartDate")?.value || null,
 		});
 
 		youPayText.textContent = `£${metrics.totalFinalCost.toFixed(2)}`;

@@ -379,6 +379,213 @@ label {
 	font-size: 24px;
 }
 
+.form-group input[type="date"] {
+	width: 100%;
+	border: 1px solid var(--gray-200);
+	border-radius: var(--border-radius);
+	background-color: white;
+	color: var(--gray-800);
+	padding: 10px;
+	font-size: 14px;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	border-radius: 4px;
+	margin-right: 2px;
+	opacity: 0.6;
+	filter: invert(0.8);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+	opacity: 1;
+}
+
+input[type="date"]:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+}
+
+input[type="date"]::placeholder {
+	color: var(--gray-400);
+}
+
+input[type="date"]::-webkit-outer-spin-button,
+input[type="date"]::-webkit-inner-spin-button {
+	display: none;
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="date"]:disabled {
+	background-color: var(--gray-100);
+	color: var(--gray-400);
+	cursor: not-allowed;
+}
+
+.bookmarklet-section {
+	margin-top: 48px;
+	padding: 24px;
+	background-color: white;
+	border: 1px solid var(--gray-200);
+	border-radius: var(--border-radius);
+	text-align: center;
+}
+
+.bookmarklet-section h2 {
+	margin-bottom: 8px;
+	color: var(--gray-900);
+	font-size: 20px;
+}
+
+.bookmarklet-section p {
+	margin-bottom: 16px;
+	color: var(--gray-600);
+	font-size: 14px;
+}
+
+.bookmarklet-buttons {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.bookmarklet-btn,
+.bookmarklet-copy {
+	padding: 12px 24px;
+	border-radius: var(--border-radius);
+	font-weight: 600;
+	transition:
+		transform 0.2s,
+		box-shadow 0.2s;
+}
+
+.bookmarklet-btn {
+	display: inline-block;
+	background: linear-gradient(135deg, var(--primary), var(--secondary));
+	color: white;
+	border: 2px solid var(--primary-dark);
+	cursor: move;
+	box-shadow: 0 4px 6px rgba(234, 88, 12, 0.2);
+	user-select: none;
+}
+
+.bookmarklet-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(234, 88, 12, 0.3);
+}
+
+.bookmarklet-btn:active {
+	transform: translateY(0);
+}
+
+.bookmarklet-copy {
+	border: none;
+}
+
+.bookmarklet-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 20px;
+}
+
+.bookmarklet-modal[hidden] {
+	display: none;
+}
+
+.bookmarklet-modal-content {
+	background-color: white;
+	border-radius: var(--border-radius);
+	padding: 24px;
+	max-width: 500px;
+	width: 100%;
+	max-height: 80vh;
+	overflow-y: auto;
+	position: relative;
+}
+
+.bookmarklet-modal h3 {
+	margin-bottom: 16px;
+	color: var(--gray-900);
+	font-size: 18px;
+}
+
+.bookmarklet-steps {
+	margin-bottom: 20px;
+	margin-left: 20px;
+	color: var(--gray-700);
+	font-size: 14px;
+}
+
+.bookmarklet-steps li {
+	margin-bottom: 8px;
+}
+
+.bookmarklet-code {
+	width: 100%;
+	height: 120px;
+	padding: 12px;
+	margin-bottom: 16px;
+	border: 1px solid var(--gray-200);
+	border-radius: var(--border-radius);
+	font-family: "Courier New", monospace;
+	font-size: 12px;
+	resize: vertical;
+	background-color: var(--gray-50);
+}
+
+.modal-close {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	background: none;
+	border: none;
+	font-size: 28px;
+	color: var(--gray-500);
+	cursor: pointer;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal-close:hover {
+	color: var(--gray-700);
+}
+
+@media (max-width: 640px) {
+	.bookmarklet-section {
+		padding: 20px;
+	}
+
+	.bookmarklet-buttons {
+		flex-direction: column;
+	}
+
+	.bookmarklet-btn,
+	.bookmarklet-copy {
+		width: 100%;
+	}
+
+	.bookmarklet-modal-content {
+		max-height: 90vh;
+	}
+}
+
 @media (max-width: 768px) {
 	.nav-container {
 		align-items: flex-start;
