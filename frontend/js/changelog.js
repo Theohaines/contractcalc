@@ -7,7 +7,8 @@ const releases = [
 		tags: ["QoL"],
 		items: [
 			"Updated default monthly increase to £1.80 (ID Mobile).",
-			"Updated calculator to take into account contract start date for better accuracy."
+			"Updated calculator to take into account contract start date for better accuracy.",
+			"Added bookmarklet to allow for quick calculation on the carphone warehouse website (support for more sites coming soon)."
 		],
 	},
 	{
