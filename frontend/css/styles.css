@@ -379,6 +379,53 @@ label {
 	font-size: 24px;
 }
 
+.form-group input[type="date"] {
+	width: 100%;
+	border: 1px solid var(--gray-200);
+	border-radius: var(--border-radius);
+	background-color: white;
+	color: var(--gray-800);
+	padding: 10px;
+	font-size: 14px;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	border-radius: 4px;
+	margin-right: 2px;
+	opacity: 0.6;
+	filter: invert(0.8);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+	opacity: 1;
+}
+
+input[type="date"]:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+}
+
+input[type="date"]::placeholder {
+	color: var(--gray-400);
+}
+
+input[type="date"]::-webkit-outer-spin-button,
+input[type="date"]::-webkit-inner-spin-button {
+	display: none;
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type="date"]:disabled {
+	background-color: var(--gray-100);
+	color: var(--gray-400);
+	cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
 	.nav-container {
 		align-items: flex-start;

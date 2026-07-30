@@ -6,7 +6,8 @@ const releases = [
 		excerpt: "QOL Release.",
 		tags: ["QoL"],
 		items: [
-			"Updated default monthly increase to £1.80 (ID Mobile)."
+			"Updated default monthly increase to £1.80 (ID Mobile).",
+			"Updated calculator to take into account contract start date for better accuracy."
 		],
 	},
 	{
